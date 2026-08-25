@@ -5,7 +5,7 @@ from playwright.sync_api import expect
 
 """def is used to create a function in Python. In automation testing, 
    each test case is written inside a function so it can be executed independently by Pytest."""
-def test1_launch_browser():
+def test_launch_browser():
    with sync_playwright() as p:
       browser = p.chromium.launch(headless=False)
       context = browser.new_context(viewport={'width': 1920, 'height': 1080})

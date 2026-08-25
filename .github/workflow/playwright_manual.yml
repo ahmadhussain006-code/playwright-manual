@@ -1,0 +1,40 @@
+name: Playwright Tests   # Name of this CI/CD workflow, shown in GitHub's Actions tab
+
+on:                       # Defines WHEN this workflow should run automatically
+  push:
+    branches: [ main, master ]      # Run on every push to main/master branch
+  pull_request:
+    branches: [ main, master ]      # Also run when a PR is opened against main/master
+
+jobs:
+  test:                    # Name of this job
+    runs-on: ubuntu-latest # Spins up a fresh Linux virtual machine for the job
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4   # Pulls the repo's code onto the VM
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'    # Installs Python 3.12 on the VM
+
+      - name: Install dependencies
+        run: |
+          pip install playwright
+          pip install pytest
+          pip install pytest-playwright
+          pip install pytest-html   # Installs all required packages, same as local setup
+
+      - name: Install Playwright browsers
+        run: playwright install --with-deps   # Downloads Chromium/Firefox/WebKit + Linux system dependencies
+
+      - name: Run tests
+        run: pytest --headed=false -s --html=report.html   # Runs the full test suite headlessly, generates an HTML report
+
+      - name: Upload test report
+        if: always()                # Runs this step even if tests failed
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: report.html         # Saves the HTML report so it can be downloaded after the run

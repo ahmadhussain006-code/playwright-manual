@@ -21,7 +21,7 @@ def test_signup():
 
        #Fill the signup form
        page.wait_for_selector('//input[@type="text"]').fill('Hussain')
-       page.wait_for_selector('//input[@data-qa="signup-email"]').fill('sandy22@test.com')
+       page.wait_for_selector('//input[@data-qa="signup-email"]').fill('sandy25@test.com')
        page.wait_for_selector('//button[@data-qa="signup-button"]').click()
 
        #assertion

@@ -1,5 +1,8 @@
 name: Playwright Tests   # Name of this CI/CD workflow, shown in GitHub's Actions tab
 
+permissions:
+  contents: write   # Grants the workflow write access to the repo, needed to push the gh-pages branch
+
 on:                       # Defines WHEN this workflow should run automatically
   push:
     branches: [ main, master ]      # Run on every push to main/master branch
@@ -37,7 +40,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: pytest-report
-          path: report.html         # Saves the HTML report so it can be downloaded after the run
+          path: report.html         # Saves the HTML report as a downloadable zip artifact
 
       - name: Deploy report to GitHub Pages
         if: always()                # Publishes the report even if tests failed, so failures are viewable too

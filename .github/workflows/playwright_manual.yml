@@ -30,7 +30,7 @@ jobs:
         run: playwright install --with-deps   # Downloads Chromium/Firefox/WebKit + Linux system dependencies
 
       - name: Run tests
-        run: pytest --headed=false -s --html=report.html   # Runs the full test suite headlessly, generates an HTML report
+        run: pytest --html=report.html   # Runs the full test suite headlessly, generates an HTML report
 
       - name: Upload test report
         if: always()                # Runs this step even if tests failed

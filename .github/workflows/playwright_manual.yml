@@ -38,3 +38,12 @@ jobs:
         with:
           name: pytest-report
           path: report.html         # Saves the HTML report so it can be downloaded after the run
+
+      - name: Deploy report to GitHub Pages
+        if: always()                # Publishes the report even if tests failed, so failures are viewable too
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./            # Publishes files from the repo root (where report.html sits)
+          publish_branch: gh-pages   # Pushes the report to a separate "gh-pages" branch, GitHub's convention for hosting
+          keep_files: true           # Keeps previous reports from earlier runs instead of overwriting the whole branch
